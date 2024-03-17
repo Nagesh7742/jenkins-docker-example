@@ -35,13 +35,13 @@ pipeline{
             steps{
                 script{
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws_cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    def dockerPath = "/usr/local/bin/docker"    
-                    sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | ${dockerPath} login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
+                       
+                    sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION |docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
                 
                     
                     }
                     def dockerPath = "/usr/local/bin/docker"
-                    sh "${dockerPath} push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$ECR_REPO_NAME:latest"
+                    sh "${dockerPath} push 637423560039.dkr.ecr.us-east-1.amazonaws.com/nagesh7742:latest"
                 
                 }
             }
