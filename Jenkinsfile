@@ -39,7 +39,7 @@ pipeline{
                     sh "echo success"
                     sh "/usr/local/bin/aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | ${dockerPath} login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
                     sh "echo success"
-                    sh "${dockerPath} push ${ECR_REPO_NAME}:v1.0.0"
+                    sh "${dockerPath} push ${ECR_REPO_NAME}:v1.0.1"
                     sh "echo full code is successfull"
                     
                     
