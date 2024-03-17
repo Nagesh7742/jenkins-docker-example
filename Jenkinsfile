@@ -9,6 +9,7 @@ pipeline{
         ECR_REPO_NAME = "637423560039.dkr.ecr.us-east-1.amazonaws.com/nagesh7742"
         AWS_ACCOUNT_ID = "637423560039"
         dockerPath = "/usr/local/bin/docker"
+        CLASSPATH = '/path/to/aws-java-sdk.jar'
         
     }
     stages{
