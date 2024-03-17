@@ -35,9 +35,9 @@ pipeline{
             steps{
                 script{
                     
-                    sh "${dockerPath} tag nagesh7742/nagesh:v1.0.0 ${ECR_REPO_NAME}/nagesh:v1.0.0"  
+                    sh "${dockerPath} tag nagesh7742/nagesh:v1.0.0 ${ECR_REPO_NAME}:v1.0.0"  
                     sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com"
-                    sh "${dockerPath} push ${ECR_REPO_NAME}/nagesh:v1.0.0"
+                    sh "${dockerPath} push ${ECR_REPO_NAME}:v1.0.0"
                     
                     
                 
