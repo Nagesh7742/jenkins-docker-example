@@ -4,6 +4,12 @@ pipeline{
         maven "MAVEN"
         
     }
+    environment{
+        AWS_DEFAULT_REGION = "us-east-1"
+        ECR_REPO_NAME = "637423560039.dkr.ecr.us-east-1.amazonaws.com/nagesh7742"
+        AWS_ACCOUNT_ID = "637423560039"
+        
+    }
     stages{
         stage("maven build"){
             
@@ -25,28 +31,19 @@ pipeline{
                 }
             }
         }
-        stage("docker run"){
+        stage("image push to ECR"){
             steps{
                 script{
-                    def dockerPath = "/usr/local/bin/docker"
-                    sh "${dockerPath} run -d -p 8085:8080 nagesh:v1.0.0"
-                }
-            }
-        }
-        stage("docker push"){
-            steps{
-                script{
-                    withCredentials([string(credentialsId: 'nagesh7742', variable: 'dockerhubpwd')]) {
-                    def dockerPath = "/usr/local/bin/docker"
-
-                    sh "${dockerPath} login -u nagesh7742 -p ${dockerhubpwd}"
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'your_aws_credentials_id', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh "aws ecr get-login-password --region $AWS_DEFAULT_REGION | ${dockerPath} login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com""
+}
                     
                     }
-                    def dockerPath = "/usr/local/bin/docker"
-                    
-                    sh "${dockerPath} push nagesh7742/nagesh:v1.0.0"
+            }
+                
                 }
             }
         }
+        
     }
 }
