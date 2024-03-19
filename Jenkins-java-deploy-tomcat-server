@@ -23,12 +23,13 @@ pipeline {
             }
         }
         post {
-        always {
+            always {
             // Send an email notification regardless of the pipeline result
-            emailext(
-                subject: "Job Completed",
-                body: "Deploy completed!!!!",
-                to: "chowdarynagesh1@gmail.com"
+                emailext(
+
+                    subject: "Job Completed",
+                    body: "Deploy completed!!!!",
+                    to: "chowdarynagesh1@gmail.com"
             )
         }
         }
