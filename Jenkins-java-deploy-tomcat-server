@@ -28,7 +28,7 @@ pipeline {
             emailext(
                 subject: "Job Completed",
                 body: "Deploy completed!!!!",
-                to: "chowdar@gmail.com"
+                to: "chowdarynagesh1@gmail.com"
             )
         }
         }
