@@ -1,1 +1,36 @@
-pip
+pipeline {
+    agent any
+    tools{
+        maven "MAVEN"
+    }
+
+    stages {
+        stage('maven build') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Nagesh7742/jenkins-docker-example.git']])
+                sh "mvn clean package"
+            }
+        }
+        stage("archive artifacts") {
+            steps {
+                archiveArtifacts artifacts: "target/*.war"
+            }
+                
+        }
+        stage("deploy"){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'tomcatid', path: '', url: 'http://65.0.95.198:8080/')], contextPath: null, war: '**/*.war'
+            }
+        }
+        stage("nottification"){
+            emailext(
+                subject: "job completed",
+                body: "deploy completed!!!!",
+                to: "chowdarynagesh1@gmail.com"
+                )
+        }
+        
+        
+    }
+}
+
