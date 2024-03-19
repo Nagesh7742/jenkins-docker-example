@@ -22,12 +22,15 @@ pipeline {
                 deploy adapters: [tomcat9(credentialsId: 'tomcatid', path: '', url: 'http://65.0.95.198:8080/')], contextPath: null, war: '**/*.war'
             }
         }
-        stage("nottification"){
+        post {
+        always {
+            // Send an email notification regardless of the pipeline result
             emailext(
-                subject: "job completed",
-                body: "deploy completed!!!!",
-                to: "chowdarynagesh1@gmail.com"
-                )
+                subject: "Job Completed",
+                body: "Deploy completed!!!!",
+                to: "chowdar@gmail.com"
+            )
+        }
         }
         
         
